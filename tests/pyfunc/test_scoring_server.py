@@ -24,6 +24,7 @@ from mlflow.types import Schema, ColSpec, DataType
 from mlflow.utils.file_utils import TempDir
 from mlflow.utils.proto_json_utils import NumpyEncoder
 from mlflow.utils import env_manager as _EnvManager
+from mlflow.models.utils import _enforce_schema
 from mlflow.version import VERSION
 
 from tests.helper_functions import (
@@ -509,7 +510,6 @@ def test_parse_with_schema(pandas_df_with_all_types):
     # Boolean is forced - zero and empty string is false, everything else is true:
     assert df["bad_boolean"].dtype == bool
     assert all(df["bad_boolean"] == [True, False, True])
-
 
 def test_serving_model_with_schema(pandas_df_with_all_types):
     class TestModel(PythonModel):
